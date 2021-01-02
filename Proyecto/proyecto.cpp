@@ -10,7 +10,8 @@ struct paciente{
     int id;
     int categoria;          //1 = urgente ; 2 = paliativo ; 3 = radical
     int tiempo;             //tiempo de espera
-
+    int atendido;           //si fue atendido el paciente, 0 si no
+    int sesiones;           //cantidad de sesiones
 };
 
 struct maquina
@@ -53,6 +54,39 @@ void AgregarMaquinas(vector<maquina>& maquinas, int cantidad){
         maquinas.push_back(maquina());  
         maquinas[i].id = i+1;
         maquinas[i].disponibilidad = 1;
+    }
+}
+
+void PlanificacionGreedy(vector<paciente>& pacientes){
+    // for (i =0; i < nPacientes; i++){
+    //     vector<int>temp;
+    //     for (j=0; j < 80; j++){
+    //         temp.push_back(i);
+    //     }
+    //     matriz.push_back(temp);
+    // }
+
+    vector<vector<int>>matriz;
+    ofstream tabla1("paciente-doctor.txt");
+    ofstream tabla2("paciente-maquina.txt");
+    int semanas,dias,bloques,i,paciente;
+    for (semanas=0; semanas < 4; semanas++){
+        for(dias=0; dias < 5; dias++){
+            for(bloques=0; bloques < 16; bloques++){
+                for(paciente=0; paciente < pacientes.size(); paciente++){
+                    vector<int>temp;
+                    if(pacientes[paciente].categoria == 1 && pacientes[paciente].tiempo >= 1 ){
+                        
+                    }
+                }
+            }
+            for(i=0; i<pacientes.size(); i++){
+                if (pacientes[i].atendido == 0){
+                    pacientes[i].tiempo++;
+                    pacientes[i].atendido = 0;
+                }
+            }
+        }
     }
 }
 
@@ -117,7 +151,7 @@ int main(){
 
     for (i=0; i < matriz.size(); i++){
         for (j=0; j < matriz[i].size(); j++){
-            tabla1 << matriz[i][j];
+            tabla1 << matriz[i][j] << "  ";
         }
         tabla1 << endl;
     }
