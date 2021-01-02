@@ -63,9 +63,10 @@ int main(){
     vector<string>doctores;
     vector<maquina>maquinas;
     vector<doctor>doctors;
+    vector<vector<int>>matriz;
     string linea, bloques, ultima;
     stringstream linea1, linea2;
-    int i;
+    int i,j;
     int nDoctores, nMaquinas, nPacientes, nRadicales, nPaliativos, nUrgentes;
     if(!archivo) 
     {
@@ -103,8 +104,28 @@ int main(){
     for (i=0; i < nMaquinas; i++){
         cout << maquinas[i].id << "su disponibilidad es: " << maquinas[i].disponibilidad << endl;
     }
+    for (i =0; i < nPacientes; i++){
+        vector<int>temp;
+        for (j=0; j < 80; j++){
+            temp.push_back(i);
+        }
+        matriz.push_back(temp);
+    }
+
+    ofstream tabla1("paciente-doctor.txt");
+    ofstream tabla2("paciente-maquina.txt");
+
+    for (i=0; i < matriz.size(); i++){
+        for (j=0; j < matriz[i].size(); j++){
+            tabla1 << matriz[i][j];
+        }
+        tabla1 << endl;
+    }
 
 
+
+    tabla1.close();
+    tabla2.close();
     archivo.close();
     return 0;
 }
