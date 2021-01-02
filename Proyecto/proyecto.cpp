@@ -47,13 +47,6 @@ void AgregarPacientes(vector<paciente>& pacientes, int cantidad, int urgente, in
     }
 }
 
-void AgregarDoctores(vector<doctor>& doctors, int cantidad){
-    int i;
-    for (i=0; i < cantidad; i++){
-        doctors[i].id = i+1;
-    }
-}
-
 void AgregarMaquinas(vector<maquina>& maquinas, int cantidad){
     int i;
     for (i=0; i < cantidad; i++){
@@ -85,7 +78,7 @@ int main(){
     linea1>>nMaquinas>>nDoctores>>nPacientes;
         
     
-    for (i = 0; i < nDoctores ; i++){           //Agregar docs
+    for (i = 0; i < nDoctores ; i++){           //Agregar docs y sus turnos x dia
         getline(archivo, bloques);
         doctors.push_back(doctor());
         doctors[i].id = i+1;
@@ -94,17 +87,12 @@ int main(){
         doctors[i].miercoles = bloques[4];
         doctors[i].jueves = bloques[6];
         doctors[i].viernes = bloques[8];
-        
-        cout << bloques[2] << endl;                // 0, 2, 4, 6, 8
-    }
-    for (i = 0; i < nDoctores; i++){
-        
+
     }
     getline(archivo,ultima);
     linea2 <<  ultima;
     linea2>>nRadicales>>nPaliativos>>nUrgentes;
     AgregarPacientes(pacientes, nPacientes, nUrgentes, nPaliativos, nRadicales);
-    AgregarDoctores(doctors, nDoctores);
     AgregarMaquinas(maquinas, nMaquinas);
     for (i=0; i < nPacientes; i++){
         cout << pacientes[i].id << "su tiempo es: " << pacientes[i].tiempo << "y su categoria es: " << pacientes[i].categoria << endl;
