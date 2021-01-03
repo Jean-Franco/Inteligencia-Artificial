@@ -18,16 +18,15 @@ struct maquina
 {
     int id;
     int disponibilidad;         //1 = disponible ; 0 = no
+    int no;
 };
 
 struct doctor                   //turnos de los doctores
 {
     int id;
-    string lunes;
-    string martes;
-    string miercoles;
-    string jueves;
-    string viernes;
+    int disponibilidad;
+    string horario;
+    int no;
 };
 
 void AgregarPacientes(vector<paciente>& pacientes, int cantidad, int urgente, int paliativo, int radical){        //Retorna un vector con los pacientes y sus carac inicializados
@@ -36,6 +35,8 @@ void AgregarPacientes(vector<paciente>& pacientes, int cantidad, int urgente, in
         pacientes.push_back(paciente());
         pacientes[i].id = i+1;
         pacientes[i].tiempo = 0;
+        pacientes[i].atendido = 0;
+        pacientes[i].sesiones = 0;
     }
     for (i = 0; i < urgente ; i++){     //10
         pacientes[i].categoria = 1;
@@ -57,37 +58,86 @@ void AgregarMaquinas(vector<maquina>& maquinas, int cantidad){
     }
 }
 
-void PlanificacionGreedy(vector<paciente>& pacientes){
-    // for (i =0; i < nPacientes; i++){
-    //     vector<int>temp;
-    //     for (j=0; j < 80; j++){
-    //         temp.push_back(i);
-    //     }
-    //     matriz.push_back(temp);
-    // }
-
-    vector<vector<int>>matriz;
+void PlanificacionGreedy(vector<paciente>& pacientes, vector<maquina>& maquinas, vector<doctor>& doctors){
+    vector<vector<int>>matrizdoctor;
+    vector<vector<int>>matrizmaquina;
     ofstream tabla1("paciente-doctor.txt");
     ofstream tabla2("paciente-maquina.txt");
-    int semanas,dias,bloques,i,paciente;
+    int semanas,dias,bloques,i,j,paciente,maquina,doctor,flag;
+    for(paciente=0; paciente < pacientes.size(); paciente++){
+        vector<int>temp1(320,0);
+        vector<int>temp2(320,0);
+        matrizdoctor.push_back(temp1);
+        matrizmaquina.push_back(temp2);
+    }
     for (semanas=0; semanas < 4; semanas++){
         for(dias=0; dias < 5; dias++){
             for(bloques=0; bloques < 16; bloques++){
                 for(paciente=0; paciente < pacientes.size(); paciente++){
-                    vector<int>temp;
-                    if(pacientes[paciente].categoria == 1 && pacientes[paciente].tiempo >= 1 ){
-                        
+                    for(doctor=0; doctor < doctors.size(); doctor++){
+                        for(maquina=0; maquina < maquinas.size(); maquina++){
+                            if(pacientes[paciente].categoria == 1 && pacientes[paciente].tiempo >= 1 && pacientes[paciente].atendido == 0 && doctors[doctor].disponibilidad == 1 && maquinas[maquina].disponibilidad == 1){
+                                matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                pacientes[paciente].atendido = 1;
+                                pacientes[paciente].tiempo = 0;
+                                pacientes[paciente].sesiones++;
+                                doctors[doctor].disponibilidad = 0;
+                                maquinas[maquina].disponibilidad = 0;
+                                cout << "entre if 1" << endl;
+                            }
+                            
+                            if(pacientes[paciente].categoria == 2 && pacientes[paciente].tiempo >= 2 && pacientes[paciente].atendido == 0 && doctors[doctor].disponibilidad == 1 && maquinas[maquina].disponibilidad == 1){
+                                matrizdoctor[paciente][bloques+ (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                matrizmaquina[paciente][bloques+ (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                pacientes[paciente].atendido = 1;
+                                pacientes[paciente].tiempo = 0;
+                                pacientes[paciente].sesiones++;
+                                doctors[doctor].disponibilidad = 0;
+                                maquinas[maquina].disponibilidad = 0;
+                                cout << "entre if 2" << endl;
+                            }
+
+                            if(pacientes[paciente].categoria == 3 && pacientes[paciente].tiempo >= 14 && pacientes[paciente].atendido == 0 && doctors[doctor].disponibilidad == 1 && maquinas[maquina].disponibilidad == 1){
+                                matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                matrizmaquina[paciente][bloques+ (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                pacientes[paciente].atendido = 1;
+                                pacientes[paciente].tiempo = 0;
+                                pacientes[paciente].sesiones++;
+                                doctors[doctor].disponibilidad = 0;
+                                maquinas[maquina].disponibilidad = 0;
+                                cout << "entre if 3" << endl;
+                            }
+                        }
                     }
                 }
+                for (doctor=0; doctor < doctors.size(); doctor++){
+                    doctors[doctor].disponibilidad = 1;
+                }
+                for (maquina=0; maquina < maquinas.size(); maquina++){
+                    maquinas[maquina].disponibilidad = 1;
+                }
             }
+            cout << "dia terminado" << endl;
             for(i=0; i<pacientes.size(); i++){
                 if (pacientes[i].atendido == 0){
                     pacientes[i].tiempo++;
-                    pacientes[i].atendido = 0;
                 }
             }
         }
+        cout << "semana terminada, +2 a dias de espera" << endl;
+        for(i=0; i < pacientes.size(); i++){
+            pacientes[i].tiempo += 2;
+        }
     }
+    for (i=0; i < matrizdoctor.size(); i++){
+        for(j=0; j < matrizdoctor[i].size(); j++){
+            tabla1 << matrizdoctor[i][j] << " ";
+        }
+        tabla1 << endl;
+    }
+    tabla1.close();
+    tabla2.close();
 }
 
 
@@ -117,12 +167,8 @@ int main(){
         getline(archivo, bloques);
         doctors.push_back(doctor());
         doctors[i].id = i+1;
-        doctors[i].lunes = bloques[0];
-        doctors[i].martes = bloques[2];
-        doctors[i].miercoles = bloques[4];
-        doctors[i].jueves = bloques[6];
-        doctors[i].viernes = bloques[8];
-
+        doctors[i].horario = bloques;
+        doctors[i].disponibilidad = 1;
     }
     getline(archivo,ultima);
     linea2 <<  ultima;
@@ -133,33 +179,34 @@ int main(){
         cout << pacientes[i].id << "su tiempo es: " << pacientes[i].tiempo << "y su categoria es: " << pacientes[i].categoria << endl;
     }
     for (i=0; i < nDoctores; i++){
-        cout << doctors[i].id << "su horario es: " << doctors[i].lunes << " " << doctors[i].martes << " " << doctors[i].miercoles << " " << doctors[i].jueves << " " << doctors[i].viernes << endl;
+        cout << doctors[i].id << "su horario es: " << doctors[i].horario << endl;
     }
     for (i=0; i < nMaquinas; i++){
         cout << maquinas[i].id << "su disponibilidad es: " << maquinas[i].disponibilidad << endl;
     }
-    for (i =0; i < nPacientes; i++){
-        vector<int>temp;
-        for (j=0; j < 80; j++){
-            temp.push_back(i);
-        }
-        matriz.push_back(temp);
-    }
+    PlanificacionGreedy(pacientes, maquinas, doctors);
+    // for (i =0; i < nPacientes; i++){
+    //     vector<int>temp;
+    //     for (j=0; j < 80; j++){
+    //         temp.push_back(i);
+    //     }
+    //     matriz.push_back(temp);
+    // }
 
-    ofstream tabla1("paciente-doctor.txt");
-    ofstream tabla2("paciente-maquina.txt");
+    // ofstream tabla1("paciente-doctor.txt");
+    // ofstream tabla2("paciente-maquina.txt");
 
-    for (i=0; i < matriz.size(); i++){
-        for (j=0; j < matriz[i].size(); j++){
-            tabla1 << matriz[i][j] << "  ";
-        }
-        tabla1 << endl;
-    }
+    // for (i=0; i < matriz.size(); i++){
+    //     for (j=0; j < matriz[i].size(); j++){
+    //         tabla1 << matriz[i][j] << "  ";
+    //     }
+    //     tabla1 << endl;
+    // }
 
 
 
-    tabla1.close();
-    tabla2.close();
+    // tabla1.close();
+    // tabla2.close();
     archivo.close();
     return 0;
 }
