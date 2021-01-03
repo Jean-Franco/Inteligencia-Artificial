@@ -562,6 +562,12 @@ void PlanificacionGreedy(vector<paciente>& pacientes, vector<maquina>& maquinas,
         }
         tabla1 << endl;
     }
+    for (i=0; i < matrizmaquina.size(); i++){
+        for(j=0; j < matrizmaquina[i].size(); j++){
+            tabla2 << matrizmaquina[i][j] << " ";
+        }
+        tabla2 << endl;
+    }
     tabla1.close();
     tabla2.close();
 }
