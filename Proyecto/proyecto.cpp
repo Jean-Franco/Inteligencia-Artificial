@@ -77,36 +77,462 @@ void PlanificacionGreedy(vector<paciente>& pacientes, vector<maquina>& maquinas,
                     for(doctor=0; doctor < doctors.size(); doctor++){
                         for(maquina=0; maquina < maquinas.size(); maquina++){
                             if(pacientes[paciente].categoria == 1 && pacientes[paciente].tiempo >= 1 && pacientes[paciente].atendido == 0 && doctors[doctor].disponibilidad == 1 && maquinas[maquina].disponibilidad == 1){
-                                matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
-                                matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
-                                pacientes[paciente].atendido = 1;
-                                pacientes[paciente].tiempo = 0;
-                                pacientes[paciente].sesiones++;
-                                doctors[doctor].disponibilidad = 0;
-                                maquinas[maquina].disponibilidad = 0;
-                                cout << "entre if 1" << endl;
+                                if(doctors[doctor].horario[0] == '1' && dias == 0 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[0] == '2' && dias == 0 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[0] == '3' && dias == 0){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[2] == '1' && dias == 1 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[2] == '2' && dias == 1 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[2] == '3' && dias == 1){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[4] == '1' && dias == 2 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[4] == '2' && dias == 2 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[4] == '3' && dias == 2){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[6] == '1' && dias == 3 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[6] == '2' && dias == 3 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[6] == '3' && dias == 3){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[8] == '1' && dias == 4 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[8] == '2' && dias == 4 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[8] == '3' && dias == 4){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
                             }
                             
                             if(pacientes[paciente].categoria == 2 && pacientes[paciente].tiempo >= 2 && pacientes[paciente].atendido == 0 && doctors[doctor].disponibilidad == 1 && maquinas[maquina].disponibilidad == 1){
-                                matrizdoctor[paciente][bloques+ (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
-                                matrizmaquina[paciente][bloques+ (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
-                                pacientes[paciente].atendido = 1;
-                                pacientes[paciente].tiempo = 0;
-                                pacientes[paciente].sesiones++;
-                                doctors[doctor].disponibilidad = 0;
-                                maquinas[maquina].disponibilidad = 0;
-                                cout << "entre if 2" << endl;
+                                if(doctors[doctor].horario[0] == '1' && dias == 0 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[0] == '2' && dias == 0 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[0] == '3' && dias == 0){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[2] == '1' && dias == 1 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[2] == '2' && dias == 1 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[2] == '3' && dias == 1){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[4] == '1' && dias == 2 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[4] == '2' && dias == 2 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[4] == '3' && dias == 2){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[6] == '1' && dias == 3 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[6] == '2' && dias == 3 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[6] == '3' && dias == 3){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[8] == '1' && dias == 4 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[8] == '2' && dias == 4 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[8] == '3' && dias == 4){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
                             }
 
                             if(pacientes[paciente].categoria == 3 && pacientes[paciente].tiempo >= 14 && pacientes[paciente].atendido == 0 && doctors[doctor].disponibilidad == 1 && maquinas[maquina].disponibilidad == 1){
-                                matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
-                                matrizmaquina[paciente][bloques+ (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
-                                pacientes[paciente].atendido = 1;
-                                pacientes[paciente].tiempo = 0;
-                                pacientes[paciente].sesiones++;
-                                doctors[doctor].disponibilidad = 0;
-                                maquinas[maquina].disponibilidad = 0;
-                                cout << "entre if 3" << endl;
+                                if(doctors[doctor].horario[0] == '1' && dias == 0 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[0] == '2' && dias == 0 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[0] == '3' && dias == 0){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[2] == '1' && dias == 1 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[2] == '2' && dias == 1 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[2] == '3' && dias == 1){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[4] == '1' && dias == 2 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[4] == '2' && dias == 2 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[4] == '3' && dias == 2){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[6] == '1' && dias == 3 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[6] == '2' && dias == 3 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[6] == '3' && dias == 3){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[8] == '1' && dias == 4 && bloques < 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[8] == '2' && dias == 4 && bloques >= 8){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
+                                if(doctors[doctor].horario[8] == '3' && dias == 4){
+                                    matrizdoctor[paciente][bloques + (16*pacientes[paciente].tiempo)] = doctors[doctor].id;
+                                    matrizmaquina[paciente][bloques + (16*pacientes[paciente].tiempo)] = maquinas[maquina].id;
+                                    pacientes[paciente].atendido = 1;
+                                    pacientes[paciente].tiempo = 0;
+                                    pacientes[paciente].sesiones++;
+                                    doctors[doctor].disponibilidad = 0;
+                                    maquinas[maquina].disponibilidad = 0;
+                                    cout << "entre if 1" << endl;
+                                }
                             }
                         }
                     }
