@@ -60,21 +60,38 @@ void AgregarMaquinas(vector<maquina>& maquinas, int cantidad){
     }
 }
 
-// int verificarHorario(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matrizmaquina, vector<doctor>& doctors){
-//     int i, j, k;
-//     for(i=0; i < matrizdoctor.size(); i++){
-//         for(j=0; j < matrizdoctor[i].size(); j++){
-//             if(matrizdoctor[i][j] != 0){
-//                 for(k=0; k < doctors.size() ; k++){
-//                     if(matrizdoctor[i][j] == doctors[k].id){
-//                         if()
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     return 0;
-// }
+int verificarHorario(vector<vector <int>>& matrizdoctor, vector<paciente>& pacientes){
+    int i, j, k, contadordias;
+    for(i=0; i < matrizdoctor.size(); i++){
+        contadordias = 0;
+        for(j=0; j < matrizdoctor[i].size(); j++){
+            if(j%16 == 0 && j!= 0){
+                contadordias++;
+            }
+            if(matrizdoctor[i][j] != 0){
+                if(pacientes[i].categoria == 3 && j >= 63 && j <= 79 && contadordias >= 14 && contadordias < 28){
+                    return 0;
+                }
+                if(pacientes[i].categoria == 3 && j >= 143 && j <= 159 && contadordias >= 14 && contadordias < 28){
+                    return 0;
+                }
+                if(pacientes[i].categoria == 3 && j >= 223 && j <= 239 && contadordias >= 14 && contadordias < 28){
+                    return 0;
+                }
+                if(pacientes[i].categoria == 3 && j >= 303 && j <= 319 && contadordias >= 14 && contadordias < 28){
+                    return 0;
+                }
+                if(pacientes[i].categoria == 2 && contadordias >= 2 && contadordias < 14){
+                    return 0;
+                }
+                if(pacientes[i].categoria == 1 && contadordias >= 1 && contadordias < 2){
+                    return 0;
+                }
+            }
+        }
+    }
+    return 1;
+}
 
 void CambiarEstados(vector<paciente>& pacientes, vector<doctor>& doctors, vector<maquina>& maquinas, int idPaciente, int idDoctor, int idMaquina){
     pacientes[idPaciente].atendido = 1;
@@ -83,38 +100,59 @@ void CambiarEstados(vector<paciente>& pacientes, vector<doctor>& doctors, vector
     maquinas[idMaquina].disponibilidad = 0;
 }
 
-void Movimiento(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matrizmaquina, vector<paciente>& pacientes, vector<doctor>& doctors, int random1, int random2){  //movimiento para generar vecinos que consta de realizar un swap entre pacientes
-    int i, j, k, l, temp1, temp2;
-    for(i=0; i < matrizdoctor.size(); i++){
-        if (random1 == i){
-            for(j=0; j < matrizdoctor.size(); j++){
-                if(random2 == j){
-                    for(k=0; k < matrizdoctor[i].size(); k++){
-                        if(matrizdoctor[i][k] != 0){
-                            for(l=0; l < matrizdoctor[j].size(); l++){
-                                if(matrizdoctor[j][l] != 0){                                   
-                                    if(pacientes[i].movido == 0 && pacientes[j].movido == 0){
-                                        temp1 = matrizdoctor[i][k];
-                                        matrizdoctor[i][k] = matrizdoctor[j][k];
-                                        matrizdoctor[j][k] = temp1;
-                                        temp2 = matrizdoctor[i][l];
-                                        matrizdoctor[i][l] = matrizdoctor[j][l];
-                                        matrizdoctor[j][l] = temp2;
-                                        pacientes[i].movido = 1;
-                                        pacientes[j].movido = 1;
-                                        // if (verificarHorario(matrizdoctor, matrizmaquina, doctors) == 1){
-                                        //     return "movimiento factible";
-                                        // }
-                                        // else{
-                                        //     return "movimiento infactible";
-                                        // }
-                                    }
-                                }
+int Movimiento(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matrizmaquina, vector<paciente>& pacientes){  //movimiento para generar vecinos que consta de realizar un swap entre pacientes
+    int i, j, k, l, temp1, temp2, temp3, temp4, semanas1, dias1, bloques1, dias2, bloques2, cont;
+    cont = 0;
+    semanas1 = 1;
+    for(i=0; i < matrizdoctor.size() ; i++){
+        bloques1 = 0;
+        dias1 = 0;
+        semanas1 = 1;
+        for (j=0; j < matrizdoctor[i].size(); j++){
+            if(j%16 == 0 && j != 0){
+                dias1++;
+                bloques1 = 0;
+                if(dias1 == 4){
+                    semanas1++;
+                    dias1 = 0;
+                }
+            }
+            if(matrizdoctor[i][j] != 0){
+                for(k=(i+1); k < matrizdoctor.size() ; k++){
+                    dias2 = 0;
+                    bloques2 = 0;
+                    if(dias1 != 4){
+                        for(l=(j+16); l < matrizdoctor[k].size(); l++){
+                            if(l%16 == 0 && l != 0){
+                                bloques2 = 0;
                             }
+                            if(matrizdoctor[k][l] != 0 && bloques1 == bloques2 && pacientes[i].movido == 0 && pacientes[k].movido == 0){
+                                temp1 = matrizdoctor[i][j];
+                                matrizdoctor[i][j] = matrizdoctor[k][j];
+                                matrizdoctor[k][j] = temp1;
+                                temp2 = matrizdoctor[i][l];
+                                matrizdoctor[i][l] = matrizdoctor[k][l];
+                                matrizdoctor[k][l] = temp2;
+                                temp1 = matrizmaquina[i][j];
+                                matrizmaquina[i][j] = matrizmaquina[k][j];
+                                matrizmaquina[k][j] = temp1;
+                                temp2 = matrizmaquina[i][l];
+                                matrizmaquina[i][l] = matrizmaquina[k][l];
+                                matrizmaquina[k][l] = temp2;
+                                pacientes[i].movido = 1;
+                                pacientes[k].movido = 1;
+                                return 1;
+                            }
+                            bloques2++;
                         }
                     }
+                    else
+                    {
+                        break;
+                    }               
                 }
-            }            
+            }
+            bloques1++;
         }
     }
 }
@@ -122,10 +160,15 @@ void Movimiento(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matriz
 
 void PlanificacionSA(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matrizmaquina, vector<paciente>& pacientes, vector<doctor>& doctors){
     int paciente1, paciente2, i, j, k, l, Temperatura, temp;
-    srand (1);
-    paciente1 = rand() % matrizdoctor.size();
-    paciente2 = rand() % matrizdoctor.size();
-    Movimiento(matrizdoctor, matrizmaquina, pacientes, doctors, paciente1, paciente2);
+    Movimiento(matrizdoctor, matrizmaquina, pacientes);
+    if (verificarHorario(matrizdoctor, pacientes) == 0){
+        cout << "Movimiento Infactible" << endl;
+    }
+    else
+    {
+        cout << "Movimiento Pulento" << endl;
+    }
+    
 }
 
 int calcular_tiempos(vector<vector <int>>& matrizdoctor){       //dada una matriz, le calcula el tiempo total de espera
@@ -418,7 +461,7 @@ void PlanificacionGreedy(vector<paciente>& pacientes, vector<maquina>& maquinas,
         }
     }
     calcular_tiempos(matrizdoctor);
-    //PlanificacionSA(matrizdoctor, matrizmaquina, pacientes, doctors);
+    PlanificacionSA(matrizdoctor, matrizmaquina, pacientes, doctors);
     for (i=0; i < matrizdoctor.size(); i++){
         for(j=0; j < matrizdoctor[i].size(); j++){
             tabla1 << matrizdoctor[i][j] << " ";                //verificar si el " " me destruye el orden de la tabla al generar los vecinos
@@ -436,7 +479,7 @@ void PlanificacionGreedy(vector<paciente>& pacientes, vector<maquina>& maquinas,
 }
 
 int main(){
-    std::ifstream archivo("Caso3");
+    std::ifstream archivo("Caso1");
     vector<paciente>pacientes;
     vector<maquina>maquinas;
     vector<doctor>doctors;
