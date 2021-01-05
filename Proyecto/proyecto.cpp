@@ -478,8 +478,9 @@ void PlanificacionGreedy(vector<paciente>& pacientes, vector<maquina>& maquinas,
     tabla2.close();
 }
 
-int main(){
-    std::ifstream archivo("Caso1");
+int main(int argc, char** argv){
+    string file = argv[1];
+    std::ifstream archivo(file);
     vector<paciente>pacientes;
     vector<maquina>maquinas;
     vector<doctor>doctors;
@@ -495,7 +496,7 @@ int main(){
     }
     getline(archivo,linea);
     linea1 <<  linea;
-    linea1>>nMaquinas>>nDoctores>>nPacientes;
+    linea1>>nMaquinas>>nDoctores>>nPacientes; 
         
     
     for (i = 0; i < nDoctores ; i++){           //Agregar docs y sus turnos x dia
