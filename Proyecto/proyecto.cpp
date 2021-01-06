@@ -5,6 +5,7 @@
 #include <vector>
 #include <cstdio>
 #include <cstdlib>
+#include <math.h>
 using namespace std;
 
 
@@ -39,6 +40,7 @@ void AgregarPacientes(vector<paciente>& pacientes, int cantidad, int urgente, in
         pacientes[i].tiempo = 0;
         pacientes[i].atendido = 0;
         pacientes[i].sesiones = 0;
+        pacientes[i].movido = 0;
     }
     for (i = 0; i < urgente ; i++){     //10
         pacientes[i].categoria = 1;
@@ -51,7 +53,7 @@ void AgregarPacientes(vector<paciente>& pacientes, int cantidad, int urgente, in
     }
 }
 
-void AgregarMaquinas(vector<maquina>& maquinas, int cantidad){
+void AgregarMaquinas(vector<maquina>& maquinas, int cantidad){  //retorna un vector con las maquinas y sus carac inicializados
     int i;
     for (i=0; i < cantidad; i++){
         maquinas.push_back(maquina());  
@@ -60,7 +62,7 @@ void AgregarMaquinas(vector<maquina>& maquinas, int cantidad){
     }
 }
 
-int verificarHorario(vector<vector <int>>& matrizdoctor, vector<paciente>& pacientes){
+int verificarHorario(vector<vector <int>>& matrizdoctor, vector<paciente>& pacientes){      //cuando se genera un vecino, verifica si este es factible, retorna 1 si lo es, 0 en caso contrario
     int i, j, k, contadordias;
     for(i=0; i < matrizdoctor.size(); i++){
         contadordias = 0;
@@ -93,6 +95,7 @@ int verificarHorario(vector<vector <int>>& matrizdoctor, vector<paciente>& pacie
     return 1;
 }
 
+//Automatizacion del cambio del estado de los objetos involucrados, una vez se agrega un paciente, doctor y maquina a la planificacion
 void CambiarEstados(vector<paciente>& pacientes, vector<doctor>& doctors, vector<maquina>& maquinas, int idPaciente, int idDoctor, int idMaquina){
     pacientes[idPaciente].atendido = 1;
     pacientes[idPaciente].sesiones++;
@@ -100,8 +103,9 @@ void CambiarEstados(vector<paciente>& pacientes, vector<doctor>& doctors, vector
     maquinas[idMaquina].disponibilidad = 0;
 }
 
-int Movimiento(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matrizmaquina, vector<paciente>& pacientes){  //movimiento para generar vecinos que consta de realizar un swap entre pacientes
-    int i, j, k, l, temp1, temp2, temp3, temp4, semanas1, dias1, bloques1, dias2, bloques2, cont;
+//movimiento para generar vecinos que consta de realizar un swap entre pacientes de la misma semana y del mismo bloque, para ahorrar miles de verificaciones de horarios de los doctores
+int Movimiento(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matrizmaquina, vector<paciente>& pacientes){  
+    int i, j, k, l, temp1, temp2, temp3, temp4, semanas1, dias1, bloques1, dias2, bloques2, cont;  
     cont = 0;
     semanas1 = 1;
     for(i=0; i < matrizdoctor.size() ; i++){
@@ -126,7 +130,7 @@ int Movimiento(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matrizm
                             if(l%16 == 0 && l != 0){
                                 bloques2 = 0;
                             }
-                            if(matrizdoctor[k][l] != 0 && bloques1 == bloques2 && pacientes[i].movido == 0 && pacientes[k].movido == 0){
+                            if(matrizdoctor[k][l] != 0 && l < 80*semanas1 && bloques1 == bloques2 && pacientes[i].movido == 0 && pacientes[k].movido == 0){
                                 temp1 = matrizdoctor[i][j];
                                 matrizdoctor[i][j] = matrizdoctor[k][j];
                                 matrizdoctor[k][j] = temp1;
@@ -157,21 +161,22 @@ int Movimiento(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matrizm
     }
 }
 
-
-void PlanificacionSA(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matrizmaquina, vector<paciente>& pacientes, vector<doctor>& doctors){
-    int paciente1, paciente2, i, j, k, l, Temperatura, temp;
-    Movimiento(matrizdoctor, matrizmaquina, pacientes);
-    if (verificarHorario(matrizdoctor, pacientes) == 0){
-        cout << "Movimiento Infactible" << endl;
-    }
-    else
-    {
-        cout << "Movimiento Pulento" << endl;
-    }
-    
+//funcion que genera todos los vecinos de la primera solucion greedy y la agrega al conjunto de planificaciones si este es factible
+void generar_vecinos(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matrizmaquina, vector<paciente>& pacientes, vector<vector<vector <int>>>& planificacionesD, vector<vector<vector <int>>> planificacionesM){
+    int paciente1, paciente2, i, j, k, l, Temperatura;
+    for(i=0; i < pacientes.size() ; i++){
+        if(pacientes[i].movido == 0){
+            Movimiento(matrizdoctor, matrizmaquina, pacientes);
+            if (verificarHorario(matrizdoctor, pacientes) == 1){
+                planificacionesD.push_back(matrizdoctor);
+                planificacionesM.push_back(matrizmaquina);
+            }
+        }
+    }   
 }
 
-int calcular_tiempos(vector<vector <int>>& matrizdoctor){       //dada una matriz, le calcula el tiempo total de espera
+//funcion de evaluacion que calcula los dias de espera total de una planificacion
+int calcular_tiempos(vector<vector <int>>& matrizdoctor){
     int tiempototal=0, i, j;
     for (i=0; i < matrizdoctor.size(); i++){
         for (j = 0; j < matrizdoctor[i].size(); j++){
@@ -183,22 +188,24 @@ int calcular_tiempos(vector<vector <int>>& matrizdoctor){       //dada una matri
             }
         }   
     }
-    cout << "el conteo termina en " << tiempototal << " dias esperados" << endl;
+    return tiempototal;
 }
 
+//genera la solucion inicial greedy verificando las condiciones minimas de los pacientes en conjunto con los horarios de los doctores y luego la trabaja con Simulated Annealing
 void PlanificacionGreedy(vector<paciente>& pacientes, vector<maquina>& maquinas, vector<doctor>& doctors){
     vector<vector<int>>matrizdoctor;
     vector<vector<int>>matrizmaquina;
+    vector<vector<vector <int>>> planificacionesD;
+    vector<vector<vector <int>>> planificacionesM;
     ofstream tabla1("paciente-doctor.txt");
     ofstream tabla2("paciente-maquina.txt");
-    int semanas,dias,bloques,i,j,paciente,maquina,doctor,flag,tiempototal;
+    int semanas,dias,bloques,i,j,k,paciente,maquina,doctor;
     for(paciente=0; paciente < pacientes.size(); paciente++){
         vector<int>temp1(320,0);
         vector<int>temp2(320,0);
         matrizdoctor.push_back(temp1);
         matrizmaquina.push_back(temp2);
     }
-    tiempototal = 0;
     for (semanas=0; semanas < 4; semanas++){
         for(dias=0; dias < 5; dias++){
             for(bloques=0; bloques < 16; bloques++){
@@ -460,20 +467,69 @@ void PlanificacionGreedy(vector<paciente>& pacientes, vector<maquina>& maquinas,
             }
         }
     }
-    calcular_tiempos(matrizdoctor);
-    PlanificacionSA(matrizdoctor, matrizmaquina, pacientes, doctors);
-    for (i=0; i < matrizdoctor.size(); i++){
-        for(j=0; j < matrizdoctor[i].size(); j++){
-            tabla1 << matrizdoctor[i][j] << " ";                //verificar si el " " me destruye el orden de la tabla al generar los vecinos
+    planificacionesD.push_back(matrizdoctor);
+    planificacionesM.push_back(matrizmaquina);
+    
+        //Implementacion SA
+
+    float temperatura = 10;
+    float probabilidad;
+    float alpha = 0.97;
+    srand(time(NULL));
+    int paso;
+    vector<vector<vector <int>>> solucion_actual, mejor_solucion, solucion_candidata, solucion_actual_maquinas,mejor_solucion_maquinas, solucion_candidata_maquinas;
+    solucion_actual.push_back(planificacionesD[0]);
+    solucion_actual_maquinas.push_back(planificacionesM[0]);
+    mejor_solucion.push_back(solucion_actual[0]);
+    mejor_solucion_maquinas.push_back(solucion_actual_maquinas[0]);
+    for (paso=0; paso < planificacionesD.size() ; paso++){
+        generar_vecinos(matrizdoctor, matrizmaquina, pacientes, planificacionesD, planificacionesM);
+        solucion_candidata.push_back(planificacionesD[paso]);
+        solucion_candidata_maquinas.push_back(planificacionesM[paso]);
+        if(calcular_tiempos(solucion_candidata[0]) < calcular_tiempos(solucion_actual[0]) && calcular_tiempos(solucion_candidata[0]) != 0){
+            solucion_actual.pop_back();
+            solucion_actual.push_back(solucion_candidata[0]);
+            solucion_actual_maquinas.pop_back();
+            solucion_actual_maquinas.push_back(solucion_candidata_maquinas[0]);
         }
-        tabla1 << endl;
-    }
-    for (i=0; i < matrizmaquina.size(); i++){
-        for(j=0; j < matrizmaquina[i].size(); j++){
-            tabla2 << matrizmaquina[i][j] << " ";
+        else{
+            float random = rand()/RAND_MAX;
+            probabilidad = exp(((calcular_tiempos(solucion_candidata[0]) - calcular_tiempos(solucion_actual[0]))/temperatura));
+            if (random < probabilidad)
+            {
+                solucion_actual.pop_back();
+                solucion_actual.push_back(solucion_candidata[0]);
+                solucion_actual_maquinas.pop_back();
+                solucion_actual_maquinas.push_back(solucion_candidata_maquinas[0]);
+            }
         }
-        tabla2 << endl;
+        if(calcular_tiempos(solucion_candidata[0]) < calcular_tiempos(solucion_actual[0]) && calcular_tiempos(solucion_candidata[0]) != 0){
+            mejor_solucion.pop_back();
+            mejor_solucion.push_back(solucion_candidata[0]);
+            mejor_solucion_maquinas.pop_back();
+            mejor_solucion_maquinas.push_back(solucion_candidata_maquinas[0]);
+        }
+        temperatura=alpha*temperatura;
     }
+    cout << "La mejor planificacion consta de un tiempo total de: " << calcular_tiempos(mejor_solucion[0]) << " dias." << endl;
+    for(i=0; i < mejor_solucion.size() ; i++){
+        for (j=0; j < mejor_solucion[i].size(); j++){
+            for(k=0; k < mejor_solucion[i][j].size(); k++){
+                tabla1 << mejor_solucion[i][j][k] << " ";
+            }
+            tabla1 << endl;
+        }
+    }
+    for (i=0; i < mejor_solucion_maquinas.size() ; i++){
+        for (j=0; j < mejor_solucion_maquinas[i].size(); j++){
+            for(k=0; k < mejor_solucion_maquinas[i][j].size(); k++){
+                tabla2 << mejor_solucion_maquinas[i][j][k] << " ";
+            }
+            tabla2 << endl;
+        }
+
+    }
+
     tabla1.close();
     tabla2.close();
 }
