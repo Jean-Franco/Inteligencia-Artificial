@@ -15,6 +15,6 @@ Instrucciones:
     Dentro de la carpeta Proyecto se debe ejecutar de la siguiente manera en la consola:
     - "make" para compilar el programa proyecto.cpp
     - "make clean" para borrar los archivos de resultados paciente-doctor.txt y paciente-maquina.txt
-    - "make run ar=(nombre del caso)" para ejecutar el programa, donde "nombre del caso" es el nombre del archivo que recibirá como input para resolver el problema, el resultado
-    serán dos archivos con las mejores planificaciones según las técnicas utilizadas, donde las planificación paciente-doctor estará en paciente-doctor.txt y la planificación
-    paciente-máquina se deslegará en el archivo paciente-maquina.txt
+    - "make run ar=(nombre del caso)" para ejecutar el programa, donde "nombre del caso" es el nombre del archivo que recibirá como input para resolver el problema (ejemplo:
+    make run ar=Caso3), el resultado serán dos archivos con las mejores planificaciones según las técnicas utilizadas, donde las planificación paciente-doctor estará en
+    paciente-doctor.txt y la planificación paciente-máquina se deslegará en el archivo paciente-maquina.txt
