@@ -15,7 +15,7 @@ struct paciente{
     int tiempo;             //tiempo de espera
     int atendido;           //si fue atendido el paciente, 0 si no
     int sesiones;           //cantidad de sesiones
-    int movido;             //para el movimiento en SA y que no se repita por el random, 1 si se movio, 0 si no
+    int movido;             //para el movimiento en SA y que no se repita, 1 si se movio, 0 si no
 };
 
 struct maquina
@@ -31,8 +31,8 @@ struct doctor                   //turnos de los doctores
     string horario;
 };
 
-
-void AgregarPacientes(vector<paciente>& pacientes, int cantidad, int urgente, int paliativo, int radical){        //Retorna un vector con los pacientes y sus carac inicializados
+//Inicializa el vector con los pacientes y sus caracteristicas
+void AgregarPacientes(vector<paciente>& pacientes, int cantidad, int urgente, int paliativo, int radical){        
     int i, j, k;
     for (i = 0; i < cantidad ; i++ ){
         pacientes.push_back(paciente());
@@ -42,18 +42,19 @@ void AgregarPacientes(vector<paciente>& pacientes, int cantidad, int urgente, in
         pacientes[i].sesiones = 0;
         pacientes[i].movido = 0;
     }
-    for (i = 0; i < urgente ; i++){     //10
+    for (i = 0; i < urgente ; i++){
         pacientes[i].categoria = 1;
     }
-    for (j = (0 + i); j < paliativo+urgente ; j++){         //3
+    for (j = (0 + i); j < paliativo+urgente ; j++){
         pacientes[j].categoria = 2;
     }
-    for (k = (0 + j); k < radical+paliativo+urgente ; k++){           //2
+    for (k = (0 + j); k < radical+paliativo+urgente ; k++){
         pacientes[k].categoria = 3;
     }
 }
 
-void AgregarMaquinas(vector<maquina>& maquinas, int cantidad){  //retorna un vector con las maquinas y sus carac inicializados
+//Inicializa un vector con las maquinas y sus caracteristicas
+void AgregarMaquinas(vector<maquina>& maquinas, int cantidad){  
     int i;
     for (i=0; i < cantidad; i++){
         maquinas.push_back(maquina());  
@@ -62,7 +63,9 @@ void AgregarMaquinas(vector<maquina>& maquinas, int cantidad){  //retorna un vec
     }
 }
 
-int verificarHorario(vector<vector <int>>& matrizdoctor, vector<paciente>& pacientes){      //cuando se genera un vecino, verifica si este es factible, retorna 1 si lo es, 0 en caso contrario
+//cuando se genera un vecino, verifica si este es factible (considerando los días de espera según categoría, que no superen el máximo y no bajen del mínimo)
+//retorna 1 si lo es, 0 en caso contrario
+int verificarHorario(vector<vector <int>>& matrizdoctor, vector<paciente>& pacientes){  
     int i, j, k, contadordias;
     for(i=0; i < matrizdoctor.size(); i++){
         contadordias = 0;
@@ -103,7 +106,8 @@ void CambiarEstados(vector<paciente>& pacientes, vector<doctor>& doctors, vector
     maquinas[idMaquina].disponibilidad = 0;
 }
 
-//movimiento para generar vecinos que consta de realizar un swap entre pacientes de la misma semana y del mismo bloque, para ahorrar miles de verificaciones de horarios de los doctores
+//movimiento para generar vecinos que consta de realizar un swap entre pacientes de la misma semana y del mismo bloque (distinto dia)
+//para ahorrar miles de verificaciones de horarios de los doctores (en caso de hacer un swap random)
 int Movimiento(vector<vector <int>>& matrizdoctor, vector<vector <int>>& matrizmaquina, vector<paciente>& pacientes){  
     int i, j, k, l, temp1, temp2, temp3, temp4, semanas1, dias1, bloques1, dias2, bloques2, cont;  
     cont = 0;
@@ -192,6 +196,7 @@ int calcular_tiempos(vector<vector <int>>& matrizdoctor){
 }
 
 //genera la solucion inicial greedy verificando las condiciones minimas de los pacientes en conjunto con los horarios de los doctores y luego la trabaja con Simulated Annealing
+//finalmente escribe la mejor solucion en los archivos de maquinas y doctores
 void PlanificacionGreedy(vector<paciente>& pacientes, vector<maquina>& maquinas, vector<doctor>& doctors){
     vector<vector<int>>matrizdoctor;
     vector<vector<int>>matrizmaquina;
@@ -470,7 +475,7 @@ void PlanificacionGreedy(vector<paciente>& pacientes, vector<maquina>& maquinas,
     planificacionesD.push_back(matrizdoctor);
     planificacionesM.push_back(matrizmaquina);
     
-        //Implementacion SA
+        //Implementacion Simulated Annealing
 
     float temperatura = 10;
     float probabilidad;
@@ -555,7 +560,7 @@ int main(int argc, char** argv){
     linea1>>nMaquinas>>nDoctores>>nPacientes; 
         
     
-    for (i = 0; i < nDoctores ; i++){           //Agregar docs y sus turnos x dia
+    for (i = 0; i < nDoctores ; i++){           //Agregar doctores y sus turnos por dia
         getline(archivo, bloques);
         doctors.push_back(doctor());
         doctors[i].id = i+1;
