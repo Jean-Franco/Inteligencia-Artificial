@@ -1,0 +1,20 @@
+2020-2 UTFSM San Joaquín
+
+Jean-Franco Zárate, ROL: 201773524-4
+
+El proyecto consiste en intentar resolver el problema de Radiotherapy Scheduling Problem, un prolema NP-Hard, utilizando técnicas de búsqueda incompletas (estocásticas)
+estas técnicas son Greedy y Simulated Annealing. En primera instancia, se genera una primera solución utilizando Greedy y luego, se procede a generar vecinos de esta
+solución para luego aplicar SA. Las soluciones constan de una matriz donde las filas son los clientes, las columnas son los bloques y el valor de cada casilla (distinta de 0)
+es el doctor (por su ID) que atenderá a ese paciente según su horario de disponibilidad. Hay que tomar en cuenta que los pacientes radicales no pueden ser atendidos un
+día viernes, los pacientes tienen tiempos de espera mínimos y máximos de los que no se pueden salir, un paciente puede ser atendido sólo por un doctor y una máquina a la vez
+y, además, los doctores tienen horarios específicos, donde se indican los turnos en los que ellos pueden atender (donde las posibilidades son: no atiende tal día, atiende el
+primer turno, atiende el segundo, o ambos).
+
+Instrucciones:
+
+    Dentro de la carpeta Proyecto se debe ejecutar de la siguiente manera en la consola:
+    - "make" para compilar el programa proyecto.cpp
+    - "make clean" para borrar los archivos de resultados paciente-doctor.txt y paciente-maquina.txt
+    - "make run ar=(nombre del caso)" para ejecutar el programa, donde "nombre del caso" es el nombre del archivo que recibirá como input para resolver el problema, el resultado
+    serán dos archivos con las mejores planificaciones según las técnicas utilizadas, donde las planificación paciente-doctor estará en paciente-doctor.txt y la planificación
+    paciente-máquina se deslegará en el archivo paciente-maquina.txt
