@@ -10,9 +10,11 @@ día viernes, los pacientes tienen tiempos de espera mínimos y máximos de los 
 y, además, los doctores tienen horarios específicos, donde se indican los turnos en los que ellos pueden atender (donde las posibilidades son: no atiende tal día, atiende el
 primer turno, atiende el segundo, o ambos).
 
+Dentro de este directorio no se encuentran los casos de prueba, por favor agregarlos para su ejecución
+
 Instrucciones:
 
-    Dentro de la carpeta Proyecto se debe ejecutar de la siguiente manera en la consola:
+    Dentro del directorio donde se encuentre el programa, se debe ejecutar de la siguiente manera en la consola:
     - "make" para compilar el programa proyecto.cpp
     - "make clean" para borrar los archivos de resultados paciente-doctor.txt y paciente-maquina.txt
     - "make run ar=(nombre del caso)" para ejecutar el programa, donde "nombre del caso" es el nombre del archivo que recibirá como input para resolver el problema (ejemplo:
