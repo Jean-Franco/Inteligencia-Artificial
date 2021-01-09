@@ -7,3 +7,4 @@ run:
 clean:
 		rm -rf paciente-doctor.txt
 		rm -rf paciente-maquina.txt
+		rm -rf out
