@@ -491,13 +491,13 @@ void PlanificacionGreedy(vector<paciente>& pacientes, vector<maquina>& maquinas,
         generar_vecinos(matrizdoctor, matrizmaquina, pacientes, planificacionesD, planificacionesM);
         solucion_candidata.push_back(planificacionesD[paso]);
         solucion_candidata_maquinas.push_back(planificacionesM[paso]);
-        if(calcular_tiempos(solucion_candidata[0]) < calcular_tiempos(solucion_actual[0]) && calcular_tiempos(solucion_candidata[0]) != 0){
+        if(calcular_tiempos(solucion_candidata[0]) < calcular_tiempos(solucion_actual[0]) && calcular_tiempos(solucion_candidata[0]) != 0){ //si la solucion candidata es mejor a la actual, se escoje de inmediato la mejor
             solucion_actual.pop_back();
             solucion_actual.push_back(solucion_candidata[0]);
             solucion_actual_maquinas.pop_back();
             solucion_actual_maquinas.push_back(solucion_candidata_maquinas[0]);
         }
-        else{
+        else{                             //Diversifiación con la temperatura
             float random = rand()/RAND_MAX;
             probabilidad = exp(((calcular_tiempos(solucion_candidata[0]) - calcular_tiempos(solucion_actual[0]))/temperatura));
             if (random < probabilidad)
